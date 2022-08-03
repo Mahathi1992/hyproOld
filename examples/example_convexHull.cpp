@@ -1,6 +1,6 @@
 
-#include "../src/hypro/datastructures/Point.h"
-#include "../src/hypro/algorithms/convexHull/ConvexHull.h"
+#include "../include/hypro/datastructures/Point.h"
+#include "../include/hypro/algorithms/convexHull/ConvexHull.h"
 
 int main() {
 

@@ -2,8 +2,8 @@
  * \example example_plot.cpp This file shows how to use the plotter.
  */
 
-#include "representations/GeometricObjectBase.h"
-#include "util/plotting/Plotter.h"
+#include "../include/hypro/representations/GeometricObjectBase.h"
+#include "../include/hypro/util/plotting/Plotter.h"
 
 using namespace hypro;
 

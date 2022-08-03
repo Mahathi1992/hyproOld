@@ -5,9 +5,10 @@
  * @version 2015-09-09
  */
 
-#include "../src/hypro/config.h"
-#include "../src/hypro/representations/GeometricObjectBase.h"
-#include "../src/hypro/util/plotting/Plotter.h"
+#include "../include/hypro/config.h"
+#include "../include/hypro/representations/GeometricObjectBase.h"
+#include "../include/hypro/util/plotting/Plotter.h"
+#include "../include/hypro/util/type_handling/plottype_enums.h"
 #include <sys/time.h>
 
 typedef int Number;
@@ -50,20 +51,20 @@ int main() {
     std::cout << vertex << std::endl;
   }
 
-  unsigned z1 = plotter.addObject(zonoExample.vertices());
-  plotter.setObjectColor(z1, hypro::plotting::colors[hypro::plotting::red]);
-  unsigned z2 = plotter.addObject(zonoExample2.vertices());
-  plotter.setObjectColor(z2, hypro::plotting::colors[hypro::plotting::orange]);
-  unsigned z3 = plotter.addObject(zonoExample.unite(zonoExample2).vertices());
-  plotter.setObjectColor(z3, hypro::plotting::colors[hypro::plotting::green]);
+  unsigned z1 = plotter.addObject(zonoExample.vertices(), hypro::plotting::colors[hypro::plotting::red]);
+  //plotter.setObjectColor(z1, hypro::plotting::colors[hypro::plotting::red]);
+  unsigned z2 = plotter.addObject(zonoExample2.vertices(), hypro::plotting::colors[hypro::plotting::orange]);
+  //plotter.setObjectColor(z2, hypro::plotting::colors[hypro::plotting::orange]);
+  unsigned z3 = plotter.addObject(zonoExample.unite(zonoExample2).vertices(), hypro::plotting::colors[hypro::plotting::green]);
+  //plotter.setObjectColor(z3, hypro::plotting::colors[hypro::plotting::green]);
 
   hypro::vector_t<Number> d = hypro::vector_t<Number>(2);
   d << 0, -1;
 
   hypro::Zonotope<Number> intersectionResult =
       zonoExample2.intersectHalfspace(hypro::Halfspace<Number>(d, -2));
-  unsigned z4 = plotter.addObject(intersectionResult.vertices());
-  plotter.setObjectColor(z4, hypro::plotting::colors[hypro::plotting::lila]);
+  unsigned z4 = plotter.addObject(intersectionResult.vertices(), hypro::plotting::colors[hypro::plotting::lila]);
+  //plotter.setObjectColor(z4, hypro::plotting::colors[hypro::plotting::lila]);
 
   // Provoke intersection with a line by intersecting with two halfspaces.
   hypro::matrix_t<Number> constraints = hypro::matrix_t<Number>(2, 2);
@@ -73,8 +74,8 @@ int main() {
   hypro::Zonotope<Number> intersectionResult2 =
       zonoExample.unite(zonoExample2)
           .intersectHalfspaces(constraints, constants);
-  unsigned z5 = plotter.addObject(intersectionResult2.vertices());
-  plotter.setObjectColor(z5, hypro::plotting::colors[hypro::plotting::petrol]);
+  //unsigned z5 = plotter.addObject(intersectionResult2.vertices(), hypro::plotting::colors[hypro::plotting::petrol]);
+  //plotter.setObjectColor(z5, hypro::plotting::colors[hypro::plotting::petrol]);
 
   hypro::matrix_t<Number> A = hypro::matrix_t<Number>(2, 2);
   A << 1, 0.01, 0, 1;
@@ -84,10 +85,11 @@ int main() {
 
   hypro::Zonotope<Number> linearTrafoResult =
       zonoExample.affineTransformation(A, b);
-  unsigned z6 = plotter.addObject(linearTrafoResult.vertices());
-  plotter.setObjectColor(z6, hypro::plotting::colors[hypro::plotting::blue]);
+  //unsigned z6 = plotter.addObject(linearTrafoResult.vertices(), hypro::plotting::colors[hypro::plotting::blue]);
+  //plotter.setObjectColor(z6, hypro::plotting::colors[hypro::plotting::blue]);
 
-  plotter.plot2d();
+  //hypro::plotting::PLOTTYPE::pdf output_inPDF;
+  plotter.plot2d(hypro::plotting::outputFormat("pdf"));
 
   // All we want now is write to see the results
   std::ofstream results("example_zonotope.txt");
